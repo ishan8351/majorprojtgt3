@@ -1,0 +1,17 @@
+[
+  {
+    "check_id": "CKV_FINTECH_01",
+    "name": "FinTech Mandatory PCI CDE Isolation Tagging",
+    "description": "Ensure payment processing infrastructure contains mandatory compliance tags for PCI-DSS v4.0 and DORA governance.",
+    "resource_type": "aws_s3_bucket",
+    "framework": "PCI-DSS v4.0",
+    "statute_reference": "PCI-DSS v4.0 Req 12.1 & DORA Art 6",
+    "control_ids": ["PCI_DSS_1_2"],
+    "requirement_id": null,
+    "strategy": "IN_PLACE_ATTRIBUTE",
+    "target_attribute": "tags.Compliance",
+    "attribute_value": "  tags = { Compliance = \"PCI-DSS-v4.0\" }",
+    "additive_resource_template": null,
+    "validation_rules": ["require_pci_tag"]
+  }
+]

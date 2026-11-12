@@ -1,0 +1,62 @@
+{
+  "regulation": "DORA",
+  "full_name": "Digital Operational Resilience Act (Regulation (EU) 2022/2554)",
+  "jurisdiction": "European Union Financial Sector",
+  "articles": [
+    {
+      "article": "Article 6",
+      "title": "ICT Risk Management Framework",
+      "requirement": "Financial entities shall have in place a sound, comprehensive and well-documented ICT risk management framework ensuring high resilience, continuous data protection, and least-privilege computing environments.",
+      "mapped_infrastructure": [
+        "aws_vpc.fintech_vpc",
+        "aws_instance.payment_worker_a"
+      ],
+      "mitigations": [
+        "Multi-AZ network segmentation",
+        "IMDSv2 token enforcement (CKV_AWS_79)",
+        "Zero-destruction automated remediation guarantees"
+      ]
+    },
+    {
+      "article": "Article 9",
+      "title": "Protection and Prevention",
+      "requirement": "Ensure data security through cryptographic measures at rest, in transit, and in use, ensuring that cryptographic keys are independently managed and rotated.",
+      "mapped_infrastructure": [
+        "aws_kms_key.fintech_ledger_cmk",
+        "aws_s3_bucket.cardholder_data_archive",
+        "aws_db_instance.settlement_db"
+      ],
+      "mitigations": [
+        "AWS KMS Customer Managed Keys with annual rotation (CKV_AWS_7)",
+        "Additive S3 AES-256 / KMS default encryption attachments (CKV_AWS_19 / CKV_AWS_145)",
+        "PostgreSQL encrypted storage at rest (CKV_AWS_16)"
+      ]
+    },
+    {
+      "article": "Article 10",
+      "title": "Detection of Anomalous Activities",
+      "requirement": "Deploy mechanisms to promptly detect anomalous activities, including network performance issues and ICT incidents, with tamper-proof event logging.",
+      "mapped_infrastructure": [
+        "aws_cloudtrail.fintech_audit_trail",
+        "aws_s3_bucket.settlement_audit_logs"
+      ],
+      "mitigations": [
+        "Multi-region CloudTrail logging with KMS envelope encryption (CKV_AWS_36)",
+        "Immutable S3 object versioning for audit logs (CKV_AWS_21)"
+      ]
+    },
+    {
+      "article": "Article 11",
+      "title": "Backup Policies and Disaster Recovery",
+      "requirement": "Financial entities shall maintain continuous data backup systems and multi-availability zone deployments to ensure operational continuity without data loss.",
+      "mapped_infrastructure": [
+        "aws_db_instance.settlement_db",
+        "aws_s3_bucket.cardholder_data_archive"
+      ],
+      "mitigations": [
+        "Multi-AZ PostgreSQL deployment across independent availability zones",
+        "S3 object versioning (CKV_AWS_21) preventing accidental deletion or state corruption"
+      ]
+    }
+  ]
+}
